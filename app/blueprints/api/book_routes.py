@@ -42,7 +42,7 @@ def put_book(id):
     book.save()
     return make_response(f"Book {book.name} with ID {book.id} has been updated.", 200)
 
-@api.delete("/book/<ind:id>")
+@api.delete("/book/<int:id>")
 @token_auth.login_required()
 @require_admin
 def delete_book(id):

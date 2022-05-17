@@ -1,5 +1,5 @@
 from app import db, login
-from flask_login import UserMixin, current_user
+from flask_login import UserMixin
 from datetime import datetime as dt, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
@@ -46,10 +46,12 @@ class User(UserMixin, db.Model):
             "token": self.token
         }
     
-    def from_dict(self, data):
+    def from_dict(self, data): 
         for field in ["first_name", "last_name", "email", "password"]:
             if field in data:
                 setattr(self, field, data[field])
+                if field == "password":
+                    self.password = self.hash_pass(data["password"])
 
     def get_token(self, exp=86400):
         current_time = dt.utcnow()
@@ -69,6 +71,10 @@ class User(UserMixin, db.Model):
         if not user or user.token_exp < dt.utcnow():
             return None
         return user
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
