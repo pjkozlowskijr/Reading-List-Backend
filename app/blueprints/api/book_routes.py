@@ -28,7 +28,7 @@ def post_book():
     book = Book()
     book.from_dict(book_dict)
     book.save()
-    return make_response(f"Book {book.name} was created with ID {book.id}.", 200)
+    return make_response(f"Book {book.title} was created with ID {book.id}.", 200)
 
 @api.put("/book/<int:id>")
 @token_auth.login_required()
@@ -40,7 +40,7 @@ def put_book(id):
         abort(404)
     book.from_dict(book_dict)
     book.save()
-    return make_response(f"Book {book.name} with ID {book.id} has been updated.", 200)
+    return make_response(f"Book {book.title} with ID {book.id} has been updated.", 200)
 
 @api.delete("/book/<int:id>")
 @token_auth.login_required()
