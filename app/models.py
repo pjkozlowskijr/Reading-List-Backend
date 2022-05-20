@@ -79,7 +79,8 @@ def load_user(id):
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    author = db.Column(db.String)
+    author_first = db.Column(db.String)
+    author_last = db.Column(db.String)
     subject = db.Column(db.String)
     summary = db.Column(db.Text)
     pages = db.Column(db.Integer)
@@ -101,7 +102,8 @@ class Book(db.Model):
         return{
             "id": self.id,
             "title": self.title,
-            "author": self.author,
+            "author_first": self.author_first,
+            "author_last": self.author_last,
             "subject": self.subject,
             "summary": self.summary,
             "pages": self.pages,
@@ -110,6 +112,6 @@ class Book(db.Model):
         }
 
     def from_dict(self, data):
-        for field in ["title", "author", "subject", "summary", "pages", "image"]:
+        for field in ["title", "author_first", "author_last", "subject", "summary", "pages", "image"]:
             if field in data:
                 setattr(self, field, data[field])

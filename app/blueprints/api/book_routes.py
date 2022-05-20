@@ -23,7 +23,7 @@ def get_book(id):
 @require_admin
 def post_book():
     book_dict = request.get_json()
-    if not all(key in book_dict for key in ("title", "author", "subject", "summary", "pages", "image")):
+    if not all(key in book_dict for key in ("title", "author_first", "author_last", "subject", "summary", "pages", "image")):
         abort(400)
     book = Book()
     book.from_dict(book_dict)
